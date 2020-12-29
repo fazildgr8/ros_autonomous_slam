@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="ros_autonomous_slam" type="autonomous_explorer.py" 
+      name="autonomous_explorer" output="screen"/>
+</launch>

@@ -1,0 +1,8 @@
+roslaunch ros_autonomous_slam turtlebot3_world.launch
+roslaunch ros_autonomous_slam turtlebot3_slam.launch slam_methods:=gmapping
+roslaunch ros_autonomous_slam turtlebot3_navigation.launch
+
+roslaunch ros_autonomous_slam controll.launch
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+
+rosrun map_server map_saver -f my_map
