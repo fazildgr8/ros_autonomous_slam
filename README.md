@@ -18,7 +18,7 @@ I used Ubuntu 18 OS with ros Melodic Version. Check the ROS official documentati
 
 ### Gazebo ROS Installation
 The main Gazebo Simulator which is an stand alone application must be installed. Go through the documentation
-[Gazebo Installation](http://gazebosim.org/tutorials?tut=install_ubuntu&cat=install)
+[Gazebo Installation](http://gazebosim.org/tutorials?tut=install_ubuntu&cat=install).
 Test the working of Gazebo and its version with 
 ```
 gazebo
@@ -29,7 +29,7 @@ After Installing the Gazebo, the Gazebo ROS Package must be installed seperately
 ```
 sudo apt-get install ros-melodic-gazebo-ros-pkgs ros-melodic-gazebo-ros-control
 ```
-Replace `melodic` with your version of ROS.
+Replace `melodic` with your version of ROS everwhere in this tutorial.
 ### Turtlebot3 packages
 The Turtlebot3 ROS packages can be either downloaded and built from source files in your workspace
 or else directly installed from the linux terminal. Either way works, I would recommend downloading the source files and building it in your workspace.
