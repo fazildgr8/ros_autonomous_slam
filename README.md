@@ -11,9 +11,9 @@ This consist of a ROS package which uses the Navigation Stack to autonomously ex
 
 ## There are three Main steps to be executed in this project. Follow the execution of the different Launch files to acheive the reuired tasks of each step.
 
-# Step 1 : Open the Gazebo with the required environment and Place the Robot
+# Step 1 : Place the Robot in the Environment within Gazebo
 # Step 2 : Perform Autonomous exploration of the environment and generate the Map
-# Step 3 : Perform an pathplanning and go to goal in the environment
+# Step 3 : Perform pathplanning and go to goal in the environment
 
 ## Demo
 ![Virtual Pen Handwriting Detection](demo.gif)
