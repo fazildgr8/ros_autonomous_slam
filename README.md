@@ -14,7 +14,21 @@ Execute the given launch to open Gazebo with the given world file and place the 
 ```
 roslaunch ros_autonomous_slam turtlebot3_world.launch
 ```
+Keep this process running always and execute other commands in a different terminal.
 ## Step 2 : Perform Autonomous exploration of the environment and generate the Map
+```
+roslaunch ros_autonomous_slam autonomous_explorer.launch
+```
+Run the Autonomous Explorer launch file which executes two tasks for us at the same time.
+1. It starts the **SLAM** node in the Navigation stack with a custom modified RVIZ file to monitor the mapping of the environment.
+2. It simultaneously starts the **Autonomous explorer** which is a Python based controller to move around the map grazing all the areas whcih helps the **SLAM** Node to complete the mapping.
+**Monitor the Mapping process in RVIZ window** and sit back and relax unitll our robot finishes mapping XD .
+Once you are satisfied with the constructed map, Save the map.
+```
+rosrun map_server map_saver -f my_map
+```
+The **my_map.pgm** and **my_map.yaml** gets saved in your worspace directory. Copy these to files to the package **maps** folder (catkin_ws\src\ros_autonomous_slam\maps).
+Now your new map which is basically a occupancy grid is constructed !
 ## Step 3 : Perform pathplanning and go to goal in the environment
 
 ## Demo
