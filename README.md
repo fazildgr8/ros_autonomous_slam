@@ -5,6 +5,15 @@ This consist of a ROS package which uses the Navigation Stack to autonomously ex
 ### There are three Main steps to be executed in this project. Follow the execution of the different Launch files to acheive the required tasks of each step. (Look below for Project prerequisites and setup)
 
 ## Step 1 : Place the Robot in the Environment within Gazebo
+Set your environment variable to the model robot to be used.
+```
+export TURTLEBOT3_MODEL=waffle_pi
+source ~/.bashrc
+```
+Execute the given launch to open Gazebo with the given world file and place the robot Turtlebot3 Waffle pi model in it.
+```
+roslaunch ros_autonomous_slam turtlebot3_world.launch
+```
 ## Step 2 : Perform Autonomous exploration of the environment and generate the Map
 ## Step 3 : Perform pathplanning and go to goal in the environment
 
