@@ -59,7 +59,14 @@ sudo apt-get install ros-melodic-gazebo-ros-pkgs ros-melodic-gazebo-ros-control
 Replace `melodic` with your version of ROS everwhere in this tutorial.
 ### Turtlebot3 packages
 The Turtlebot3 ROS packages can be either downloaded and built from source files in your workspace
-or else directly installed from the linux terminal. Either way works, I would recommend downloading the source files and building it in your workspace.
+or else directly installed from the linux terminal. Either way works, I would recommend doing both as it installs all the missing dependencies required automatically.
+#### Direct Installation
+```
+source /opt/ros/melodic/setup.bash
+sudo apt-get install ros-melodic-turtlebot3-msgs
+sudo apt-get install ros-melodic-turtlebot3
+```
+Building the packages
 ```
 cd catkin_ws/src
 git clone -b melodic-devel https://github.com/ROBOTIS-GIT/turtlebot3
@@ -68,12 +75,7 @@ cd ..
 catkin_make
 source /devel/setup.bash
 ```
-#### Direct Installation
-```
-source /opt/ros/melodic/setup.bash
-sudo apt-get install ros-melodic-turtlebot3-msgs
-sudo apt-get install ros-melodic-turtlebot3
-```
+
 ### Navigation Stack
 The Navigation stack can also be downloaded as souce files to your workspace and built.
 ```
