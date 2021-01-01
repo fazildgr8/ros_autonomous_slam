@@ -29,6 +29,10 @@ rosrun map_server map_saver -f my_map
 ```
 The **my_map.pgm** and **my_map.yaml** gets saved in your worspace directory. Move these to files to the package's **maps** folder (catkin_ws\src\ros_autonomous_slam\maps).
 Now your new map which is basically a occupancy grid is constructed !
+**Incase of Autonomous Fail** you can manually controll the robot in the environment using the key board with the seperate launch 
+```
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+```
 ## Step 3 : Perform pathplanning and go to goal in the environment
 
 ## Demo
