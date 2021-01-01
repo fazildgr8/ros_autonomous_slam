@@ -27,7 +27,7 @@ Once you are satisfied with the constructed map, Save the map.
 ```
 rosrun map_server map_saver -f my_map
 ```
-The **my_map.pgm** and **my_map.yaml** gets saved in your worspace directory. Copy these to files to the package **maps** folder (catkin_ws\src\ros_autonomous_slam\maps).
+The **my_map.pgm** and **my_map.yaml** gets saved in your worspace directory. Move these to files to the package's **maps** folder (catkin_ws\src\ros_autonomous_slam\maps).
 Now your new map which is basically a occupancy grid is constructed !
 ## Step 3 : Perform pathplanning and go to goal in the environment
 
