@@ -21,7 +21,7 @@ roslaunch ros_autonomous_slam autonomous_explorer.launch
 ```
 Run the Autonomous Explorer launch file which executes two tasks for us at the same time.
 1. It starts the **SLAM** node in the Navigation stack with a custom modified RVIZ file to monitor the mapping of the environment.
-2. It simultaneously starts the **Autonomous explorer** which is a Python based controller to move around the map grazing all the areas whcih helps the **SLAM** Node to complete the mapping.
+2. It simultaneously starts the **Autonomous explorer** which is a Python based controller to move around the robot grazing all the areas whcih helps the **SLAM** Node to complete the mapping.
 **Monitor the Mapping process in RVIZ window** and sit back and relax unitll our robot finishes mapping XD .
 Once you are satisfied with the constructed map, Save the map.
 ```
