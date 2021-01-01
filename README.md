@@ -35,9 +35,6 @@ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
 ## Step 3 : Perform pathplanning and go to goal in the environment
 
-## Demo
-![Virtual Pen Handwriting Detection](demo.gif)
-
 ## Prerequisites and setup for the Project
 ### ROS Installation
 I used Ubuntu 18 OS with ros Melodic Version. Check the ROS official documentation for the Installation
