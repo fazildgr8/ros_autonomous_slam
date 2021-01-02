@@ -32,6 +32,7 @@ Run the Autonomous Explorer launch file which executes two tasks for us at the s
 2. It simultaneously starts the **Autonomous explorer** which is a Python based controller to move around the robot grazing all the areas whcih helps the **SLAM** Node to complete the mapping. (Currently uses BUG Algorithm for exploration)
 **Monitor the Mapping process in RVIZ window** and sit back and relax unitll our robot finishes mapping XD .
 Once you are satisfied with the constructed map, Save the map.
+![Gmapping](media/gmapping2.gif)
 ```
 rosrun map_server map_saver -f my_map
 ```
@@ -48,11 +49,16 @@ roslaunch ros_autonomous_slam turtlebot3_navigation.launch
 ```
 The RVIZ Window shows the robot's local map construction using its Laser sensors with respect to the Global Map previously constructed in Step 2 with help of a cost map.
 ### Setting Goal in the RVIZ Window
-An GOAL point can be set in the RVIZ window itself using the **2D Nav Goal** option which will be available in the top window tab.This allows you to set a goal point in the map within the RVIZ environment, then the robot automaticals performs the path palnning and starts to move in its path.
+- Firs estimate the initial Pose i.e locating the real robot location with respect to the Map. This can be set in the RVIZ window itself using the **2D Pose Estimate** and pointing and dragging the arrow in the current robot's locaion and orientation.
+![Nav](media/2d_pose_button.png)
+- An GOAL point can be set in the RVIZ window itself using the **2D Nav Goal** option which will be available in the top window tab.This allows you to set a goal point in the map within the RVIZ environment, then the robot automaticals performs the path palnning and starts to move in its path.
+![Nav](media/2d_nav_goal_button.png)
+
 ### Ros Navigation Stack Tuning Guide
 ROS Navigation Stack requires tuning its parameters which works different for different environment types to get the Optimal SLAM and Pathplanning performance.Here is ROS's Navigation Stack parameter tuning guide for Turtlebot3.
 [Turtlebot3 Navigation Parameter Tuning Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/navigation/#tuning-guide)
-
+![Nav](media/navigation3.gif)
+![Nav](media/navigation2.gif)
 ### Great!!! Now we Have successfully accomplished our SLAM task with help of ROS tools. 
 
 
