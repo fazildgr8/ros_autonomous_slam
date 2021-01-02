@@ -32,6 +32,7 @@ Run the Autonomous Explorer launch file which executes two tasks for us at the s
 2. It simultaneously starts the **Autonomous explorer** which is a Python based controller to move around the robot grazing all the areas whcih helps the **SLAM** Node to complete the mapping. (Currently uses BUG Algorithm for exploration)
 **Monitor the Mapping process in RVIZ window** and sit back and relax unitll our robot finishes mapping XD .
 Once you are satisfied with the constructed map, Save the map.
+<br />
 ![Gmapping](media/gmapping2.gif)
 ```
 rosrun map_server map_saver -f my_map
