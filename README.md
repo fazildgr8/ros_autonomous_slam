@@ -29,11 +29,24 @@ rosrun map_server map_saver -f my_map
 ```
 The **my_map.pgm** and **my_map.yaml** gets saved in your worspace directory. Move these to files to the package's **maps** folder (catkin_ws\src\ros_autonomous_slam\maps).
 Now your new map which is basically a occupancy grid is constructed !
-**Incase of Autonomous Fail** you can manually controll the robot in the environment using the key board with the seperate launch 
+**Incase of Autonomous Fail** you can manually controll the robot in the environment using the key board with the seperate launch execution given below.
 ```
 roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
 ## Step 3 : Perform pathplanning and go to goal in the environment
+We will be using the Navigation stack of the ROS to perform the pathplanning and go to goal using /movebase/goal actions. The given blow launch execution opens up a RVIZ window which shows the Robot location within the previously constructed map.
+```
+roslaunch ros_autonomous_slam turtlebot3_navigation.launch
+```
+The RVIZ Window shows the robot's local map construction using its Laser sensors with respect to the Global Map previously constructed in Step 2 with help of a cost map.
+### Setting Goal in the RVIZ Window
+An GOAL point can be set in the RVIZ window itself using the **2D Nav Goal** option which will be available in the top window tab.This allows you to set a goal point in the map within the RVIZ environment, then the robot automaticals performs the path palnning and starts to move in its path.
+
+## Great!!! Now we Have successfully accomplished our SLAM task with help of ROS tools. 
+
+### Ros Navigation Stack Tuning Guide
+ROS Navigation Stack requires tuning its parameters which works different for different environment types to get the Optimal SLAM and Pathplanning performance.Here is ROS's Navigation Stack parameter tuning guide for Turtlebot3.
+[Turtlebot3 Navigation Parameter Tuning Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/navigation/#tuning-guide)
 
 ## Prerequisites and setup for the Project
 ### ROS Installation
