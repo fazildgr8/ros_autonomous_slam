@@ -41,12 +41,12 @@ roslaunch ros_autonomous_slam turtlebot3_navigation.launch
 The RVIZ Window shows the robot's local map construction using its Laser sensors with respect to the Global Map previously constructed in Step 2 with help of a cost map.
 ### Setting Goal in the RVIZ Window
 An GOAL point can be set in the RVIZ window itself using the **2D Nav Goal** option which will be available in the top window tab.This allows you to set a goal point in the map within the RVIZ environment, then the robot automaticals performs the path palnning and starts to move in its path.
-
-## Great!!! Now we Have successfully accomplished our SLAM task with help of ROS tools. 
-
 ### Ros Navigation Stack Tuning Guide
 ROS Navigation Stack requires tuning its parameters which works different for different environment types to get the Optimal SLAM and Pathplanning performance.Here is ROS's Navigation Stack parameter tuning guide for Turtlebot3.
 [Turtlebot3 Navigation Parameter Tuning Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/navigation/#tuning-guide)
+
+### Great!!! Now we Have successfully accomplished our SLAM task with help of ROS tools. 
+
 
 ## Prerequisites and setup for the Project
 ### ROS Installation
