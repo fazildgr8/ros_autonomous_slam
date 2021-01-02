@@ -6,7 +6,11 @@ This consist of a ROS package which uses the Navigation Stack to autonomously ex
 > 2. **Self Repairing A* algorithm** which is known as Dynamic path planning in volatile enviroments.  
 > **Keep following for the updates :)** 
 
-### There are three Main steps to be executed in this project. Follow the execution of the different Launch files to acheive the required tasks of each step. (Look below for Project prerequisites and setup)
+### There are three Main steps to be executed in this project.
+- Step 1 : Place the Robot in the Environment within Gazebo
+- Step 2 : Perform Autonomous exploration of the environment and generate the Map
+- Step 3 : Perform pathplanning and go to goal in the environment
+### Follow the execution of the different Launch files to acheive the required tasks of each step. (Look below for Project prerequisites and setup)
 
 ## Step 1 : Place the Robot in the Environment within Gazebo
 Set your environment variable to the model robot to be used.
