@@ -3,7 +3,7 @@
 This consist of a ROS package which uses the Navigation Stack to autonomously explore an unknown environment with help of GMAPPING and constructs an Map of the explored environment. Finally a pathplanning algorithm from Navugation stack is used in the newly generated map to reach the goal.The Gazebo simulator is used for the simulation of the Turtlebot3 Waffle Pi robot. Various algorithms have been integrated for the Autonomously exploring the region and constructing the map with help of the 360 degree Lidar sensor. Different environments can be swapped within launch files to generate the map of the environment. 
 > **As this repository is to be updated with more efficent algorithms, my next upcoming updates iam working on are**
 > 1. The Randomly Exploring Random Tree algorithm (**RRT**) for autonomous exploration. 
-> 2. Implement **Self Repairing A* algorithm** aka Dynamic path planning in volatile enviroments.  
+> 2. Implement **Self Repairing A_star algorithm** aka Dynamic path planning in volatile enviroments.  
 > **Keep following for the updates :)** 
 
 ### There are three Main steps to be executed in this project.
