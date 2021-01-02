@@ -31,13 +31,14 @@ Run the Autonomous Explorer launch file which executes two tasks for us at the s
 1. It starts the **SLAM** node in the Navigation stack with a custom modified RVIZ file to monitor the mapping of the environment.
 2. It simultaneously starts the **Autonomous explorer** which is a Python based controller to move around the robot grazing all the areas whcih helps the **SLAM** Node to complete the mapping. (Currently uses BUG Algorithm for exploration)
 **Monitor the Mapping process in RVIZ window** and sit back and relax unitll our robot finishes mapping XD .
-Once you are satisfied with the constructed map, Save the map.
-<br />
+Once you are satisfied with the constructed map, Save the map. <br />
 ![Gmapping](media/gmapping2.gif)
+
 ```
 rosrun map_server map_saver -f my_map
 ```
 The **my_map.pgm** and **my_map.yaml** gets saved in your worspace directory. Move these to files to the package's **maps** folder (catkin_ws\src\ros_autonomous_slam\maps).
+![Gmapping](maps/my_map.pgm)
 Now your new map which is basically a occupancy grid is constructed !
 **Incase of Autonomous Fail** you can manually controll the robot in the environment using the key board with the seperate launch execution given below. You can also manually explore and construct the map like a game.
 ```
