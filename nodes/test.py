@@ -3,6 +3,7 @@ import roslib
 roslib.load_manifest('gazebo_sim')
 import rospy
 from sensor_msgs.msg import LaserScan
+from move_base_msgs.msg import MoveBaseActionGoal
 import numpy as np
 
 global laser_intensities,laser_ranges
@@ -22,7 +23,7 @@ if __name__ == '__main__':
     rospy.init_node('Test')
     rate = rospy.Rate(10.0)
 
-    sub = rospy.Subscriber('/scan', LaserScan, callback_laser)
+    sub = rospy.Subscriber('/move_base/goal', LaserScan, callback_laser)
     while not rospy.is_shutdown():
         laser_ranges_cvt = np.copy(laser_ranges)
         for i in range(len(laser_ranges_cvt)):

@@ -6,4 +6,4 @@ roslaunch ros_autonomous_slam controll.launch
 roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
 rosrun map_server map_saver -f my_map
-
+https://emanual.robotis.com/docs/en/platform/turtlebot3/navigation/#tuning-guide

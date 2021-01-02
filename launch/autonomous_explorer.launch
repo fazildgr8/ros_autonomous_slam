@@ -1,6 +1,6 @@
 <launch>
   <include file="$(find ros_autonomous_slam)/launch/turtlebot3_slam.launch">
   </include>
-  <node pkg="ros_autonomous_slam" type="autonomous_explorer.py" 
-      name="autonomous_explorer" output="screen"/>
+  <!-- <node pkg="ros_autonomous_slam" type="autonomous_explorer.py" 
+      name="autonomous_explorer" output="screen"/> -->
 </launch>
