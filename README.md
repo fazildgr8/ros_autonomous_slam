@@ -57,8 +57,9 @@ The RVIZ Window shows the robot's local map construction using its Laser sensors
 ### Ros Navigation Stack Tuning Guide
 ROS Navigation Stack requires tuning its parameters which works different for different environment types to get the Optimal SLAM and Pathplanning performance.Here is ROS's Navigation Stack parameter tuning guide for Turtlebot3.
 [Turtlebot3 Navigation Parameter Tuning Guide](https://emanual.robotis.com/docs/en/platform/turtlebot3/navigation/#tuning-guide)
+<br />
 ![Nav](media/navigation3.gif)
-![Nav](media/navigation2.gif)
+![Nav](media/navigation4.gif)
 ### Great!!! Now we Have successfully accomplished our SLAM task with help of ROS tools. 
 
 
