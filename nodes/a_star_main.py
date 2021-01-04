@@ -3,12 +3,11 @@
   ROS A star Controll Node
   ------------------------
   Created by Mohamed Fazil on 12/7/20.
-
   email: mohamedfazilsulaiman@gmail.com
   github: https://github.com/fazildgr8
 '''
 import roslib
-roslib.load_manifest('gazebo_sim')
+roslib.load_manifest('lab4')
 import rospy
 import tf
 import math
@@ -79,8 +78,8 @@ robot_rotation = [0,0,0]
 goal_reached = False
 iter_break = False
 
-final_goal_location = [10,10,0]
-# final_goal_location = [rospy.get_param('/goalx'), rospy.get_param('/goaly'), 0]
+
+final_goal_location = [rospy.get_param('/goalx'), rospy.get_param('/goaly'), 0]
 ##################### Perception Part #####################
 
 def goal_location_marker(final_goal_location):
@@ -199,11 +198,6 @@ def points_publisher(points_list):
         marker_data.points.append(Point(p[0],p[1],0))
     marker_pub.publish(marker_data)
 
-def print_path_map(global_map,path):
-    print_path = np.copy(global_map[::-1])
-    for x,y in path:
-        print_path[y][x] = 15
-    print(print_path[::-1])
 #################### Planning Part #########################
 
 def A_STAR(global_map, start, end, Type = '8c',e = 1, heuristic = 'eu' ):
@@ -216,7 +210,6 @@ def A_STAR(global_map, start, end, Type = '8c',e = 1, heuristic = 'eu' ):
     Type - Type of Neibhours ('8c' or '4c')
     e - Heurestic Factor
     heuristic - Distance Method ('d' - distance, 'eu' - euclidean distance, 'manhattan' - manhattan distance)
-
     Refference - https://medium.com/@nicholas.w.swift/easy-a-star-pathfinding-7e6689c7f7b2
     """
     print('Generating New Path')
@@ -441,21 +434,43 @@ if __name__ == '__main__':
     rospy.init_node('A_STAR')
     rate = rospy.Rate(10.0)
     # Subscribe to /odom and laser sensor
-    sub = rospy.Subscriber('/scan', LaserScan, callback_laser) # Receive Laser Msg from /stage
+    sub = rospy.Subscriber('/base_scan', LaserScan, callback_laser) # Receive Laser Msg from /stage
     sub_odom = rospy.Subscriber('/odom', Odometry, callback_odom) # Receive Odom readings
+    start = (int(robot_location[0]+9),int(robot_location[1]+10))
+    final_goal_location = [rospy.get_param('/goalx'), rospy.get_param('/goaly'), 0]
+    end = (int(final_goal_location[0]+9), int(final_goal_location[1]+10))
+    # global_map[13][8] = 1 
+
+    # A star factors
+    neibhour_type = '8c'
+    heuristic = 'eu'
+    heuristic_factor = 2
     
-    # while not rospy.is_shutdown():
-    #     return None
+    # Get the Path in Map coordinates
+    final_path = A_STAR(global_map[::-1],start,end,neibhour_type,heuristic_factor,heuristic)
+    if(final_path==None):
+        neibhour_type = '4c'
+        final_path = A_STAR(global_map[::-1],start,end,neibhour_type,heuristic_factor,heuristic)
+    odom_trans = [-9,-10]
+    # Convert points in Map coordinate to Global Coordinates
+    path_odom_frame = convert_path(final_path,odom_trans,0)
+    goal_reached = False
+    
+    while not rospy.is_shutdown():
+        # Accuire new path when the Goal parameters are changed
+        if(final_goal_location != [rospy.get_param('/goalx'), rospy.get_param('/goaly'), 0]):
+            final_goal_location = [rospy.get_param('/goalx'), rospy.get_param('/goaly'), 0]
+            start = (int(robot_location[0]+9),int(robot_location[1]+10))
+            end = (int(final_goal_location[0]+9), int(final_goal_location[1]+10))
+            goal_reached = False
+            final_path = A_STAR(global_map[::-1],start,end,neibhour_type,heuristic_factor,heuristic)
+            path_odom_frame = convert_path(final_path,odom_trans,0)
 
-
-
-
-        
-        
-
-
-
-
-
-        
-        
+        # Visualize the Path in RVIZ
+        points_publisher(path_odom_frame)
+        goal_location_marker(final_goal_location)
+        if(goal_reached==False):
+            # Follow the path till goal is reached
+            Follow_path(path_odom_frame)
+        elif(goal_reached==True):
+            print('Goal Reached')
