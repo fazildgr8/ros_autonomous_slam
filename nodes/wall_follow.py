@@ -56,7 +56,7 @@ def tmnt_controller():
 	prev_error      = 0
 	prev_prev_error = 0
 
-	rospy.init_node('tmnt_wallfollowing_control', anonymous=True)
+	rospy.init_node('wallfollowing_control', anonymous=True)
 	velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 	scan_subscriber    = rospy.Subscriber('/scan', LaserScan, callback)
 	rate               = rospy.Rate(10)                  # 20hz

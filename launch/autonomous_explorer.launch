@@ -1,6 +1,20 @@
 <launch>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="move_forward_only" default="False"/>
+  <arg name="explorer" default="RRT"/>
+
+  <!-- SLAM Node -->
   <include file="$(find ros_autonomous_slam)/launch/turtlebot3_slam.launch">
   </include>
-  <!-- <node pkg="ros_autonomous_slam" type="autonomous_explorer.py" 
-      name="autonomous_explorer" output="screen"/> -->
+
+  <!-- move_base -->
+  <include file="$(find turtlebot3_navigation)/launch/move_base.launch">
+    <arg name="model" value="$(arg model)" />
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include>
+
+<!-- Autonomous Explorer Node -->
+  <include file="$(find ros_autonomous_slam)/launch/$(arg explorer).launch">
+  </include>
+
 </launch>

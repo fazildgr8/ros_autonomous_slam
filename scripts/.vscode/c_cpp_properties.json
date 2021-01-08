@@ -1,0 +1,39 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/fazildgr8/catkin_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/amcl/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/base_local_planner/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/carrot_planner/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/clear_costmap_recovery/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/costmap_2d/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/dwa_local_planner/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/global_planner/include/**",
+        "/home/fazildgr8/catkin_ws/src/lab1/include/**",
+        "/home/fazildgr8/catkin_ws/src/lab2/include/**",
+        "/home/fazildgr8/catkin_ws/src/lab4/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/map_server/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/move_base/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/move_slow_and_clear/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/nav_core/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/navfn/include/**",
+        "/home/fazildgr8/catkin_ws/src/ros_basics_tutorials/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/rotate_recovery/include/**",
+        "/home/fazildgr8/catkin_ws/src/rrt_exploration/include/**",
+        "/home/fazildgr8/catkin_ws/src/turtlebot3_simulations/turtlebot3_fake/include/**",
+        "/home/fazildgr8/catkin_ws/src/turtlebot3_simulations/turtlebot3_gazebo/include/**",
+        "/home/fazildgr8/catkin_ws/src/turtlebot3_applications/turtlebot3_panorama/include/**",
+        "/home/fazildgr8/catkin_ws/src/turtlebot3/turtlebot3_slam/include/**",
+        "/home/fazildgr8/catkin_ws/src/navigation/voxel_grid/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ]
+}

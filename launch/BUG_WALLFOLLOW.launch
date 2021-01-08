@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="ros_autonomous_slam" type="wall_follow.py" name="local_detector" output="screen">
+  </node>
+</launch>
