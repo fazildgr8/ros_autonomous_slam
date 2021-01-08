@@ -38,7 +38,6 @@ The RRT exploration requires a rectangular region around to be defined in the RV
 <br />
 ![RRT Mapping](media/RRT.gif)
 
-<br />
 **Once you are satisfied with the constructed map, Save the map.**
 ```
 rosrun map_server map_saver -f my_map
