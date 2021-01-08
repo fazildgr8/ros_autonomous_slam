@@ -1,10 +1,7 @@
 # ros_autonomous_slam
 
-This consist of a ROS package which uses the Navigation Stack to autonomously explore an unknown environment with help of GMAPPING and constructs an Map of the explored environment. Finally a pathplanning algorithm from Navugation stack is used in the newly generated map to reach the goal.The Gazebo simulator is used for the simulation of the Turtlebot3 Waffle Pi robot. Various algorithms have been integrated for the Autonomously exploring the region and constructing the map with help of the 360 degree Lidar sensor. Different environments can be swapped within launch files to generate the map of the environment. 
-> **As this repository is to be updated with more efficent algorithms, my next upcoming updates iam working on are**
-> 1. The Randomly Exploring Random Tree algorithm (**RRT**) for autonomous exploration. 
-> 2. Implement **Self Repairing A_star algorithm** aka Dynamic path planning in volatile enviroments.  
-> **Keep following for the updates :)** 
+This consist of a ROS package which uses the Navigation Stack to autonomously explore an unknown environment with help of GMAPPING and constructs an Map of the explored environment. Finally a pathplanning algorithm from Navugation stack is used in the newly generated map to reach the goal.The Gazebo simulator is used for the simulation of the Turtlebot3 Waffle Pi robot. Various algorithms have been integrated for the Autonomously exploring the region and constructing the map with help of the 360 degree Lidar sensor. Different environments can be swapped within launch files to generate the map of the environment. The current most efficient algorithm used for autonomous exploration is **Randomly Exploring Random Tree (RRT) algorithm** . The RRT Algorithm is implemented using the package from [rrt_exploration](http://wiki.ros.org/rrt_exploration) which was created to support the Kobuki robots which I further modified the source files and built it for the Turtlebot3 robots in this package.
+> **As this repository is to be updated with more efficent codes as I get requests, please keep reporting the issues and following my updates**
 
 ### There are three Main steps to be executed in this project.
 - Step 1 : Place the Robot in the Environment within Gazebo
@@ -25,11 +22,14 @@ roslaunch ros_autonomous_slam turtlebot3_world.launch
 Keep this process running always and execute other commands in a different terminal.
 ## Step 2 : Perform Autonomous exploration of the environment and generate the Map
 ```
-roslaunch ros_autonomous_slam autonomous_explorer.launch
+roslaunch ros_autonomous_slam autonomous_explorer.launch 
 ```
 Run the Autonomous Explorer launch file which executes two tasks for us at the same time.
 1. It starts the **SLAM** node in the Navigation stack with a custom modified RVIZ file to monitor the mapping of the environment.
-2. It simultaneously starts the **Autonomous explorer** which is a Python based controller to move around the robot grazing all the areas whcih helps the **SLAM** Node to complete the mapping. (Currently uses BUG Algorithm for exploration)
+2. It simultaneously starts the **Autonomous explorer** which is a Python based controller to move around the robot grazing all the areas whcih helps the **SLAM** Node to complete the mapping. The default algorithm used for the exploration is RRT algorithm. I have also created a explorer method which uses Bug Wall following algorithm for exploration which can be tested by adding ```explorer``` argument to the launch which takes ```[RRT,BUG_WALLFOLLOW]```.
+```
+roslaunch ros_autonomous_slam autonomous_explorer.launch explorer:=BUG_WALLFOLLOW
+```
 **Monitor the Mapping process in RVIZ window** and sit back and relax unitll our robot finishes mapping XD .
 Once you are satisfied with the constructed map, Save the map. <br />
 ![Gmapping](media/gmapping2.gif)
