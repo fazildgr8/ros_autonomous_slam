@@ -37,7 +37,8 @@ The RRT exploration requires a rectangular region around to be defined in the RV
 **Monitor the Mapping process in RVIZ window** and sit back and relax unitll our robot finishes mapping XD .
 <br />
 ![RRT Mapping](media/RRT.gif)
-![Gmapping](media/gmapping2.gif)
+
+<br />
 **Once you are satisfied with the constructed map, Save the map.**
 ```
 rosrun map_server map_saver -f my_map
@@ -48,6 +49,7 @@ The **my_map.pgm** and **my_map.yaml** gets saved in your worspace directory. Mo
 ```
 roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
+![Manual Gmapping](media/gmapping2.gif)
 ## Step 3 : Perform pathplanning and go to goal in the environment
 We will be using the Navigation stack of the ROS to perform the pathplanning and go to goal using /movebase/goal actions. The given blow launch execution opens up a RVIZ window which shows the Robot location within the previously constructed map.
 ```
