@@ -4,7 +4,7 @@ This consist of a ROS package which uses the Navigation Stack to autonomously ex
 > [Medium Story of this Project](https://mohamedfazilrobotics.medium.com/ros-autonomous-slam-using-randomly-exploring-random-tree-rrt-37186f6e3568)
 <img src="media/rrt_robot.png" alt="RRT_ROBOT" class="center" width="600"/>
 
-> **As this repository is to be updated with more efficent codes as I get requests, please keep reporting the issues and following my updates**
+> **As this repository is to be updated with more big free codes as I get requests, please keep reporting the issues and following my updates**
 
 ### There are three Main steps to be executed in this project.
 - Step 1 : Place the Robot in the Environment within Gazebo
