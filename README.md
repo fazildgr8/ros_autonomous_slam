@@ -35,6 +35,7 @@ The RRT exploration requires a rectangular region around to be defined in the RV
 ![points_sequence](media/points_seq.png) <br />
 **Monitor the Mapping process in RVIZ window** and sit back and relax unitll our robot finishes mapping XD .
 Once you are satisfied with the constructed map, Save the map. <br />
+![RRT Mapping](media/RRT.gif)
 ![Gmapping](media/gmapping2.gif)
 
 ```
