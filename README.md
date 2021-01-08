@@ -34,10 +34,10 @@ I have also created a explorer method which uses Bug Wall following algorithm fo
 The RRT exploration requires a rectangular region around to be defined in the RVIZ window using four points and an starting point for exploration within the known region of the robot. The total five points must be defined in the exact sequence given below using the RVIZ **Publish Points** option.<br />
 ![points_sequence](media/points_seq.png) <br />
 **Monitor the Mapping process in RVIZ window** and sit back and relax unitll our robot finishes mapping XD .
-Once you are satisfied with the constructed map, Save the map. <br />
+<br />
 ![RRT Mapping](media/RRT.gif)
 ![Gmapping](media/gmapping2.gif)
-
+**Once you are satisfied with the constructed map, Save the map.**
 ```
 rosrun map_server map_saver -f my_map
 ```
