@@ -31,7 +31,7 @@ Run the Autonomous Explorer launch file which executes two tasks for us at the s
 2. It simultaneously starts the **Autonomous explorer** which is a Python based controller to move around the robot grazing all the areas whcih helps the **SLAM** Node to complete the mapping. The default algorithm used for the exploration is RRT algorithm. 
 I have also created a explorer method which uses Bug Wall following algorithm for exploration which can be tested by adding ```explorer``` argument to the launch which takes ```[RRT,BUG_WALLFOLLOW]```.
 ### Setting Exploration region in RVIZ Window ([More Details](http://wiki.ros.org/rrt_exploration/Tutorials/singleRobot))
-The RRT exploration requires a rectangular region around to be defined in the RVIZ window using four points and an starting point for exploration within the known region of the robot. The total five points must be defined in the exact sequence given below using the RVIZ **Publish Points** option.
+The RRT exploration requires a rectangular region around to be defined in the RVIZ window using four points and an starting point for exploration within the known region of the robot. The total five points must be defined in the exact sequence given below using the RVIZ **Publish Points** option.<br />
 ![points_sequence](media/points_seq.png)
 **Monitor the Mapping process in RVIZ window** and sit back and relax unitll our robot finishes mapping XD .
 Once you are satisfied with the constructed map, Save the map. <br />
