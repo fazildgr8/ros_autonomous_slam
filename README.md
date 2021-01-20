@@ -33,7 +33,7 @@ Run the Autonomous Explorer launch file which executes two tasks for us at the s
 I have also created a explorer method which uses Bug Wall following algorithm for exploration which can be tested by adding ```explorer``` argument to the launch which takes ```[RRT,BUG_WALLFOLLOW]```.
 ### Setting Exploration region for RRT in RVIZ Window ([More Details](http://wiki.ros.org/rrt_exploration/Tutorials/singleRobot))
 The RRT exploration requires a rectangular region around to be defined in the RVIZ window using four points and an starting point for exploration within the known region of the robot. The total five points must be defined in the exact sequence given below using the RVIZ **Publish Points** option. [Source](http://wiki.ros.org/rrt_exploration/Tutorials/singleRobot)<br />
-![points_sequence](media/rrt_boundary2.png) <br />
+![points_sequence](media/rrt_boundary2.jpg) <br />
 **Monitor the Mapping process in RVIZ window** and sit back and relax unitll our robot finishes mapping XD .
 <br />
 ![RRT Mapping](media/RRT.gif)
