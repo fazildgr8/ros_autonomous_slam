@@ -11,7 +11,7 @@ import tf
 from numpy import array, vstack, delete
 from functions import gridValue, informationGain
 from sklearn.cluster import MeanShift
-from rrt_exploration.msg import PointArray
+from ros_autonomous_slam.msg import PointArray
 
 # Subscribers' callbacks------------------------------
 mapData = OccupancyGrid()
