@@ -7,7 +7,7 @@ from visualization_msgs.msg import Marker
 from geometry_msgs.msg import Point
 from nav_msgs.msg import OccupancyGrid
 import tf
-from rrt_exploration.msg import PointArray
+from ros_autonomous_slam.msg import PointArray
 from time import time
 from numpy import array
 from numpy import linalg as LA
