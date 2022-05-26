@@ -2,11 +2,11 @@
 
 
 #--------Include modules---------------
-import rospy
+import rclpy
 from visualization_msgs.msg import Marker
 from nav_msgs.msg import OccupancyGrid
 from geometry_msgs.msg import PointStamped
-from getfrontier import getfrontier
+from ros_autonomous_slam.getfrontier import getfrontier
 
 #-----------------------------------------------------
 # Subscribers' callbacks------------------------------
@@ -24,21 +24,21 @@ def mapCallBack(data):
 def node():
 		global mapData
 		exploration_goal=PointStamped()
-		rospy.init_node('detector', anonymous=False)
-		map_topic= rospy.get_param('~map_topic','/map')
-		rospy.Subscriber(map_topic, OccupancyGrid, mapCallBack)
-		targetspub = rospy.Publisher('/detected_points', PointStamped, queue_size=10)
-		pub = rospy.Publisher('shapes', Marker, queue_size=10)
+		rclpy.init_node('detector', anonymous=False)
+		map_topic= rclpy.get_param('~map_topic','/map')
+		rclpy.Subscriber(map_topic, OccupancyGrid, mapCallBack)
+		targetspub = rclpy.Publisher('/detected_points', PointStamped, queue_size=10)
+		pub = rclpy.Publisher('shapes', Marker, queue_size=10)
 # wait until map is received, when a map is received, mapData.header.seq will not be < 1
 		while mapData.header.seq<1 or len(mapData.data)<1:
 			pass
     	   	
-		rate = rospy.Rate(50)	
+		rate = rclpy.Rate(50)	
 		points=Marker()
 
 		#Set the frame ID and timestamp.  See the TF tutorials for information on these.
 		points.header.frame_id=mapData.header.frame_id
-		points.header.stamp=rospy.Time.now()
+		points.header.stamp=rclpy.Time.now()
 
 		points.ns= "markers"
 		points.id = 0
@@ -53,15 +53,15 @@ def node():
 		points.color.g = 0.0/255.0
 		points.color.b = 0.0/255.0
 		points.color.a=1;
-		points.lifetime == rospy.Duration();
+		points.lifetime == rclpy.Duration();
 
 #-------------------------------OpenCV frontier detection------------------------------------------
-		while not rospy.is_shutdown():
+		while not rclpy.is_shutdown():
 			frontiers=getfrontier(mapData)
 			for i in range(len(frontiers)):
 				x=frontiers[i]
 				exploration_goal.header.frame_id= mapData.header.frame_id
-				exploration_goal.header.stamp=rospy.Time(0)
+				exploration_goal.header.stamp=rclpy.Time(0)
 				exploration_goal.point.x=x[0]
 				exploration_goal.point.y=x[1]
 				exploration_goal.point.z=0	
@@ -83,7 +83,7 @@ def node():
 if __name__ == '__main__':
     try:
         node()
-    except rospy.ROSInterruptException:
+    except rclpy.ROSInterruptException:
         pass
  
  

@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "functions.hpp"
 
 
 // rdm class, for gentaring random flot numbers
@@ -74,7 +74,7 @@ return x_new;
 
 
 //gridValue function
-int gridValue(nav_msgs::OccupancyGrid &mapData,std::vector<float> Xp){
+int gridValue(nav_msgs::msg::OccupancyGrid &mapData,std::vector<float> Xp){
 
 float resolution=mapData.info.resolution;
 float Xstartx=mapData.info.origin.position.x;
@@ -96,13 +96,13 @@ return out;
 
 // ObstacleFree function-------------------------------------
 
-char ObstacleFree(std::vector<float> xnear, std::vector<float> &xnew, nav_msgs::OccupancyGrid mapsub){
+char ObstacleFree(std::vector<float> xnear, std::vector<float> &xnew, nav_msgs::msg::OccupancyGrid mapsub){
 float rez=float(mapsub.info.resolution)*.2;
 float stepz=int(ceil(Norm(xnew,xnear))/rez); 
 std::vector<float> xi=xnear;
 char  obs=0; char unk=0;
  
-geometry_msgs::Point p;
+geometry_msgs::msg::Point p;
 for (int c=0;c<stepz;c++){
   xi=Steer(xi,xnew,rez);
   		
@@ -119,9 +119,6 @@ char out=0;
  		
  if (obs!=1 && unk!=1){   out=1;}
 
- 
- 
- 
  return out;
  
 

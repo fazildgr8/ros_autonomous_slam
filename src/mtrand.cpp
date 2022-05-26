@@ -1,6 +1,6 @@
 // mtrand.cpp, see include file mtrand.h for information
 
-#include "mtrand.h"
+#include "mtrand.hpp"
 // non-inline function definitions and static member definitions cannot
 // reside in header file because of the risk of multiple declarations
 

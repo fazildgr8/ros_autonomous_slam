@@ -1,47 +1,27 @@
-#include "ros/ros.h"
-#include "std_msgs/String.h"
-#include <sstream>
-#include <iostream>
-#include <string>
-#include <vector>
-#include "stdint.h"
-#include "functions.h"
-#include "mtrand.h"
-
-
-#include "nav_msgs/OccupancyGrid.h"
-#include "geometry_msgs/PointStamped.h"
-#include "std_msgs/Header.h"
-#include "nav_msgs/MapMetaData.h"
-#include "geometry_msgs/Point.h"
-#include "visualization_msgs/Marker.h"
-#include <tf/transform_listener.h>
-
+#include "functions.hpp"
 
 
 // global variables
-nav_msgs::OccupancyGrid mapData;
-geometry_msgs::PointStamped clickedpoint;
-geometry_msgs::PointStamped exploration_goal;
-visualization_msgs::Marker points,line;
+nav_msgs::msg::OccupancyGrid mapData;
+geometry_msgs::msg::PointStamped clickedpoint;
+geometry_msgs::msg::PointStamped exploration_goal;
+visualization_msgs::msg::Marker points,line;
 float xdim,ydim,resolution,Xstartx,Xstarty,init_map_x,init_map_y;
 
 rdm r; // for genrating random numbers
 
-
-
 //Subscribers callback functions---------------------------------------
-void mapCallBack(const nav_msgs::OccupancyGrid::ConstPtr& msg)
+void mapCallBack(const nav_msgs::msg::OccupancyGrid::ConstPtr& msg)
 {
 mapData=*msg;
 }
 
 
  
-void rvizCallBack(const geometry_msgs::PointStamped::ConstPtr& msg)
+void rvizCallBack(const geometry_msgs::msg::PointStamped::ConstPtr& msg)
 { 
 
-geometry_msgs::Point p;  
+geometry_msgs::msg::Point p;  
 p.x=msg->point.x;
 p.y=msg->point.y;
 p.z=msg->point.z;
@@ -64,39 +44,42 @@ int main(int argc, char **argv)
   MTRand drand; // double in [0, 1) generator, already init
 
 // generate the same numbers as in the original C test program
-  ros::init(argc, argv, "local_rrt_frontier_detector");
-  ros::NodeHandle nh;
+  rclcpp::init(argc, argv);
+  auto nh = rclcpp::Node::make_shared("local_rrt_frontier_detector node");
   
   // fetching all parameters
   float eta,init_map_x,init_map_y,range;
   std::string map_topic,base_frame_topic;
   
   std::string ns;
-  ns=ros::this_node::getName();
+  ns=nh->get_name();
 
-  ros::param::param<float>(ns+"/eta", eta, 0.5);
-  ros::param::param<std::string>(ns+"/map_topic", map_topic, "/map"); 
-  ros::param::param<std::string>(ns+"/robot_frame", base_frame_topic, "/base_link"); 
+
+  nh->declare_parameter(ns+"/eta", 0.5);
+  nh->declare_parameter(ns+"/map_topic", "/map");
+  nh->declare_parameter(ns+"/robot_frame", "/base_link");
+
+//   rclcpp::param::param<float>(ns+"/eta", eta, 0.5);
+//   rclcpp::param::param<std::string>(ns+"/map_topic", map_topic, "/map"); 
+//   rclcpp::param::param<std::string>(ns+"/robot_frame", base_frame_topic, "/base_link"); 
 //---------------------------------------------------------------
-ros::Subscriber sub= nh.subscribe(map_topic, 100 ,mapCallBack);	
-ros::Subscriber rviz_sub= nh.subscribe("/clicked_point", 100 ,rvizCallBack);	
+auto sub= nh->create_subscription<nav_msgs::msg::OccupancyGrid>(map_topic, 100 ,mapCallBack);	
+auto rviz_sub= nh->create_subscription<geometry_msgs::msg::PointStamped>("/clicked_point", 100 ,rvizCallBack);	
 
-ros::Publisher targetspub = nh.advertise<geometry_msgs::PointStamped>("/detected_points", 10);
-ros::Publisher pub = nh.advertise<visualization_msgs::Marker>(ns+"_shapes", 10);
+auto targetspub = nh->create_publisher<geometry_msgs::msg::PointStamped>("/detected_points", 10);
+auto pub = nh->create_publisher<visualization_msgs::msg::Marker>(ns+"_shapes", 10);
 
-ros::Rate rate(100); 
+rclcpp::Rate rate(100); 
  
  
 // wait until map is received, when a map is received, mapData.header.seq will not be < 1  
-while (mapData.header.seq<1 or mapData.data.size()<1)  {  ros::spinOnce();  ros::Duration(0.1).sleep();}
-
-
+while (std::stoi(mapData.header.frame_id) < 1 or mapData.data.size()<1)  {  rclcpp::spin_some(nh);  rclcpp::sleep_for(std::chrono::nanoseconds(100));}
 
 //visualizations  points and lines..
 points.header.frame_id=mapData.header.frame_id;
 line.header.frame_id=mapData.header.frame_id;
-points.header.stamp=ros::Time(0);
-line.header.stamp=ros::Time(0);
+points.header.stamp=rclcpp::Time(0);
+line.header.stamp=rclcpp::Time(0);
 	
 points.ns=line.ns = "markers";
 points.id = 0;
@@ -106,7 +89,7 @@ line.id =1;
 points.type = points.POINTS;
 line.type=line.LINE_LIST;
 
-//Set the marker action.  Options are ADD, DELETE, and new in ROS Indigo: 3 (DELETEALL)
+//Set the marker action.  Options are ADD, DELETE, and new in rclcpp Indigo: 3 (DELETEALL)
 points.action =points.ADD;
 line.action = line.ADD;
 points.pose.orientation.w =1.0;
@@ -124,20 +107,18 @@ points.color.g = 0.0/255.0;
 points.color.b = 0.0/255.0;
 points.color.a=0.3;
 line.color.a = 1.0;
-points.lifetime = ros::Duration();
-line.lifetime = ros::Duration();
+// points.lifetime = rclcpp::Duration();
+// line.lifetime = rclcpp::Duration();
 
-geometry_msgs::Point p;  
+geometry_msgs::msg::Point p;  
 
 
 while(points.points.size()<5)
 {
-ros::spinOnce();
+rclcpp::spin_some(nh);
 
-pub.publish(points) ;
+pub->publish(points) ;
 }
-
-
 
 
 std::vector<float> temp1;
@@ -165,10 +146,7 @@ Xstartx=(points.points[0].x+points.points[2].x)*.5;
 Xstarty=(points.points[0].y+points.points[2].y)*.5;
 
 
-
-
-
-geometry_msgs::Point trans;
+geometry_msgs::msg::Point trans;
 trans=points.points[4];
 std::vector< std::vector<float>  > V; 
 std::vector<float> xnew; 
@@ -176,12 +154,7 @@ xnew.push_back( trans.x);xnew.push_back( trans.y);
 V.push_back(xnew);
 
 points.points.clear();
-pub.publish(points) ;
-
-
-
-
-
+pub->publish(points) ;
 
 
 std::vector<float> frontiers;
@@ -189,9 +162,11 @@ int i=0;
 float xr,yr;
 std::vector<float> x_rand,x_nearest,x_new;
 
-tf::TransformListener listener;
+std::unique_ptr<tf2_ros::Buffer> tfBuffer = std::make_unique<tf2_ros::Buffer>(nh->get_clock());
+std::shared_ptr<tf2_ros::TransformListener> listener = std::make_shared<tf2_ros::TransformListener>(*tfBuffer);
+
 // Main loop
-while (ros::ok()){
+while (rclcpp::ok()){
 
 
 // Sample free
@@ -216,7 +191,7 @@ char   checking=ObstacleFree(x_nearest,x_new,mapData);
 
 	  if (checking==-1){
 
-			exploration_goal.header.stamp=ros::Time(0);
+			exploration_goal.header.stamp=rclcpp::Time(0);
           	exploration_goal.header.frame_id=mapData.header.frame_id;
           	exploration_goal.point.x=x_new[0];
           	exploration_goal.point.y=x_new[1];
@@ -226,22 +201,22 @@ char   checking=ObstacleFree(x_nearest,x_new,mapData);
 			p.z=0.0;
 					
           	points.points.push_back(p);
-          	pub.publish(points) ;
-          	targetspub.publish(exploration_goal);
+          	pub->publish(points) ;
+          	targetspub->publish(exploration_goal);
 		  	points.points.clear();
 		  	V.clear();
 		  	
-		  	
-			tf::StampedTransform transform;
+			tf2::Transform transform;
 			int  temp=0;
 			while (temp==0){
 			try{
 			temp=1;
-			listener.lookupTransform(map_topic, base_frame_topic , ros::Time(0), transform);
+			tfBuffer->lookupTransform(map_topic, base_frame_topic , tf2::TimePointZero);
 			}
-			catch (tf::TransformException ex){
+
+			catch (tf2::TransformException ex){
 			temp=0;
-			ros::Duration(0.1).sleep();
+			rclcpp::sleep_for(std::chrono::nanoseconds(100));
 			}}
 			
 			x_new[0]=transform.getOrigin().x();
@@ -267,11 +242,11 @@ char   checking=ObstacleFree(x_nearest,x_new,mapData);
 
 
 
-pub.publish(line);  
+pub->publish(line);  
 
 
    
 
-ros::spinOnce();
+rclcpp::spin_some(nh);
 rate.sleep();
   }return 0;}

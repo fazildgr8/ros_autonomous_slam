@@ -1,7 +1,7 @@
-import rospy
-import tf
+import rclpy
+import tf2_ros
 from numpy import array
-import actionlib
+import actionlib_msgs
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from nav_msgs.srv import GetPlan
 from geometry_msgs.msg import PoseStamped
@@ -19,30 +19,30 @@ class robot:
     def __init__(self, name):
         self.assigned_point = []
         self.name = name
-        self.global_frame = rospy.get_param('~global_frame', 'map')
-        self.robot_frame = rospy.get_param('~robot_frame', 'base_link')
-        self.plan_service = rospy.get_param(
+        self.global_frame = rclpy.get_param('~global_frame', 'map')
+        self.robot_frame = rclpy.get_param('~robot_frame', 'base_link')
+        self.plan_service = rclpy.get_param(
             '~plan_service', '/move_base/NavfnROS/make_plan')
-        self.listener = tf.TransformListener()
-        self.listener.waitForTransform(
-            self.global_frame, self.name+'/'+self.robot_frame, rospy.Time(0), rospy.Duration(10.0))
+        self.listener = tf2_ros.TransformListener()
+        self.listener.waitf2_rosorTransform(
+            self.global_frame, self.name+'/'+self.robot_frame, rclpy.Time(0), rclpy.Duration(10.0))
         cond = 0
         while cond == 0:
             try:
-                rospy.loginfo('Waiting for the robot transform')
+                rclpy.loginfo('Waiting for the robot transform')
                 (trans, rot) = self.listener.lookupTransform(
-                    self.global_frame, '/'+self.robot_frame, rospy.Time(0))
+                    self.global_frame, '/'+self.robot_frame, rclpy.Time(0))
                 cond = 1
-            except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+            except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
                 cond == 0
         self.position = array([trans[0], trans[1]])
         self.assigned_point = self.position
         self.client = actionlib.SimpleActionClient('/move_base', MoveBaseAction)
         self.client.wait_for_server()
         robot.goal.target_pose.header.frame_id = "map"
-        robot.goal.target_pose.header.stamp = rospy.Time.now()
-        rospy.wait_for_service(self.plan_service)
-        self.make_plan = rospy.ServiceProxy(
+        robot.goal.target_pose.header.stamp = rclpy.Time.now()
+        rclpy.wait_for_service(self.plan_service)
+        self.make_plan = rclpy.ServiceProxy(
             self.name+self.plan_service, GetPlan)
         robot.start.header.frame_id = self.global_frame
         robot.end.header.frame_id = self.global_frame
@@ -52,9 +52,9 @@ class robot:
         while cond == 0:
             try:
                 (trans, rot) = self.listener.lookupTransform(
-                    self.global_frame, self.name+'/'+self.robot_frame, rospy.Time(0))
+                    self.global_frame, self.name+'/'+self.robot_frame, rclpy.Time(0))
                 cond = 1
-            except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+            except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
                 cond == 0
         self.position = array([trans[0], trans[1]])
         return self.position

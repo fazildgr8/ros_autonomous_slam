@@ -8,8 +8,8 @@
 '''
 import roslib
 roslib.load_manifest('lab4')
-import rospy
-import tf
+import rclpy
+import tf2_ros
 import math
 from math import cos,sin
 import random
@@ -18,7 +18,7 @@ from geometry_msgs.msg import Point,Pose
 from nav_msgs.msg import Odometry, OccupancyGrid, MapMetaData, GridCells
 from sensor_msgs.msg import LaserScan
 from visualization_msgs.msg import Marker
-from tf.transformations import euler_from_quaternion
+from tf2_ros.transformations import euler_from_quaternion
 import numpy as np
 import time
 import sys
@@ -79,14 +79,14 @@ goal_reached = False
 iter_break = False
 
 
-final_goal_location = [rospy.get_param('/goalx'), rospy.get_param('/goaly'), 0]
+final_goal_location = [rclpy.get_param('/goalx'), rclpy.get_param('/goaly'), 0]
 ##################### Perception Part #####################
 
 def goal_location_marker(final_goal_location):
     '''
     Publishes the Goal Location Text in RVIZ
     '''
-    marker_pub = rospy.Publisher('goal_location_marker', Marker,queue_size=1) # Publish Robot Position to RVIZ
+    marker_pub = rclpy.Publisher('goal_location_marker', Marker,queue_size=1) # Publish Robot Position to RVIZ
     marker_data = Marker()
     marker_data.type = marker_data.TEXT_VIEW_FACING
     marker_data.action = marker_data.ADD
@@ -139,7 +139,7 @@ def robot_cube_publisher(trans,rot):
     '''
     Publishes Robot Marker in RVIZ
     '''
-    marker_pub = rospy.Publisher('robot_marker', Marker,queue_size=1) # Publish Robot Position to RVIZ
+    marker_pub = rclpy.Publisher('robot_marker', Marker,queue_size=1) # Publish Robot Position to RVIZ
     marker_data = Marker()
     marker_data.type = marker_data.CUBE
     marker_data.pose.position.x = trans[0]
@@ -176,11 +176,11 @@ def OccupancyGrid_publish(global_map):
     map_msg.info.height = data.shape[0]
     map_msg.info.width = data.shape[1]
     map_msg.data = data.ravel()
-    grid_publisher = rospy.Publisher('map', OccupancyGrid,queue_size=1) # Publish Occupancy Grid to RVIZ
+    grid_publisher = rclpy.Publisher('map', OccupancyGrid,queue_size=1) # Publish Occupancy Grid to RVIZ
     grid_publisher.publish(map_msg)
 
 def points_publisher(points_list):
-    marker_pub = rospy.Publisher('path_points', Marker,queue_size=1) # Publish Robot Position to RVIZ
+    marker_pub = rclpy.Publisher('path_points', Marker,queue_size=1) # Publish Robot Position to RVIZ
     marker_data = Marker()
     marker_data.type = marker_data.LINE_STRIP
     marker_data.action = marker_data.ADD
@@ -406,7 +406,7 @@ def go_to_goal(goal):
     if(abs(err_theta)>0.01):
         va = ka*(err_theta)
 
-    vel_1 = rospy.Publisher('/cmd_vel', geometry_msgs.msg.Twist,queue_size=10) # Publish Command to robot_1
+    vel_1 = rclpy.Publisher('/cmd_vel', geometry_msgs.msg.Twist,queue_size=10) # Publish Command to robot_1
     cmd = geometry_msgs.msg.Twist()
     cmd.linear.x = vx
     cmd.angular.z = va
@@ -431,13 +431,13 @@ def Follow_path(path):
             
 
 if __name__ == '__main__':
-    rospy.init_node('A_STAR')
-    rate = rospy.Rate(10.0)
+    rclpy.init_node('A_STAR')
+    rate = rclpy.Rate(10.0)
     # Subscribe to /odom and laser sensor
-    sub = rospy.Subscriber('/base_scan', LaserScan, callback_laser) # Receive Laser Msg from /stage
-    sub_odom = rospy.Subscriber('/odom', Odometry, callback_odom) # Receive Odom readings
+    sub = rclpy.Subscriber('/base_scan', LaserScan, callback_laser) # Receive Laser Msg from /stage
+    sub_odom = rclpy.Subscriber('/odom', Odometry, callback_odom) # Receive Odom readings
     start = (int(robot_location[0]+9),int(robot_location[1]+10))
-    final_goal_location = [rospy.get_param('/goalx'), rospy.get_param('/goaly'), 0]
+    final_goal_location = [rclpy.get_param('/goalx'), rclpy.get_param('/goaly'), 0]
     end = (int(final_goal_location[0]+9), int(final_goal_location[1]+10))
     # global_map[13][8] = 1 
 
@@ -456,10 +456,10 @@ if __name__ == '__main__':
     path_odom_frame = convert_path(final_path,odom_trans,0)
     goal_reached = False
     
-    while not rospy.is_shutdown():
+    while not rclpy.is_shutdown():
         # Accuire new path when the Goal parameters are changed
-        if(final_goal_location != [rospy.get_param('/goalx'), rospy.get_param('/goaly'), 0]):
-            final_goal_location = [rospy.get_param('/goalx'), rospy.get_param('/goaly'), 0]
+        if(final_goal_location != [rclpy.get_param('/goalx'), rclpy.get_param('/goaly'), 0]):
+            final_goal_location = [rclpy.get_param('/goalx'), rclpy.get_param('/goaly'), 0]
             start = (int(robot_location[0]+9),int(robot_location[1]+10))
             end = (int(final_goal_location[0]+9), int(final_goal_location[1]+10))
             goal_reached = False
